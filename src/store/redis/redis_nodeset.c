@@ -2431,7 +2431,12 @@ static void node_connector_callback(redisAsyncContext *ac, void *rep, void *priv
         return node_connector_fail(node, "pubsub connection missing, can't send AUTH command");
       }
       //now authenticate pubsub ctx
-      redisAsyncCommand(node->ctx.pubsub, node_connector_callback, node, "AUTH %b", STR(&cp->password));
+      if(cp->username.len > 0) {
+        redisAsyncCommand(node->ctx.pubsub, node_connector_callback, node, "AUTH %b %b", STR(&cp->username), STR(&cp->password));
+      }
+      else {
+        redisAsyncCommand(node->ctx.pubsub, node_connector_callback, node, "AUTH %b", STR(&cp->password));
+      }
       node->state++;
       break;
     

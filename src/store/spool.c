@@ -376,7 +376,7 @@ static ngx_int_t spool_fetch_msg_callback(ngx_int_t code, nchan_msg_t *msg, fetc
         spool->msg_status = prev_status;
         break;
       }
-      /*fallthrough*/
+      break;
     case MSG_EXPIRED:
       //is this right?
       //TODO: maybe message-expired notification
